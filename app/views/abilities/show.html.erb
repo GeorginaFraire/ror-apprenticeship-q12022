@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ability.name %>
+</p>
+
+<p>
+  <strong>Is main series:</strong>
+  <%= @ability.is_main_series %>
+</p>
+
+<p>
+  <strong>Bool:</strong>
+  <%= @ability.bool %>
+</p>
+
+<%= link_to 'Edit', edit_ability_path(@ability) %> |
+<%= link_to 'Back', abilities_path %>
