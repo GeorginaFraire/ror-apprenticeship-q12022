@@ -10,28 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_14_040113) do
+ActiveRecord::Schema.define(version: 2022_01_17_232532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "abilities", force: :cascade do |t|
-    t.string "name"
-    t.string "is_main_series"
-    t.string "bool"
+    t.string "name", limit: 255, null: false
+    t.boolean "is_main_series", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "ability_pokemons", force: :cascade do |t|
+    t.integer "ability_id"
+    t.integer "pokemon_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ability_id", "pokemon_id"], name: "index_ability_pokemons_on_ability_id_and_pokemon_id"
+  end
+
+  create_table "pokemon_types", force: :cascade do |t|
+    t.integer "pokemon_id"
+    t.integer "type_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pokemon_id", "type_id"], name: "index_pokemon_types_on_pokemon_id_and_type_id"
+  end
+
   create_table "pokemons", force: :cascade do |t|
-    t.string "name"
-    t.integer "order"
-    t.integer "base_expirence"
-    t.integer "heigth"
-    t.integer "weight"
+    t.string "name", limit: 255, null: false
+    t.integer "order", null: false
+    t.integer "base_expirence", null: false
+    t.integer "heigth", null: false
+    t.integer "weight", null: false
     t.string "img_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_default"
   end
 
   create_table "types", force: :cascade do |t|
