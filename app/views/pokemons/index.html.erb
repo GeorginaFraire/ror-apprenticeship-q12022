@@ -1,16 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Pokemons</h1>
+<%= link_to 'New Pokemon', new_pokemon_path %>
 
 <table>
   <thead>
     <tr>
+       <th></th>
       <th>Name</th>
       <th>Order</th>
       <th>Base expirence</th>
       <th>Heigth</th>
       <th>Weight</th>
-      <th>Img url</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,12 +19,12 @@
   <tbody>
     <% @pokemons.each do |pokemon| %>
       <tr>
+        <td> <%= image_tag("#{pokemon.img_url}") %></td>
         <td><%= pokemon.name %></td>
         <td><%= pokemon.order %></td>
         <td><%= pokemon.base_expirence %></td>
         <td><%= pokemon.heigth %></td>
         <td><%= pokemon.weight %></td>
-        <td><%= pokemon.img_url %></td>
         <td><%= link_to 'Show', pokemon %></td>
         <td><%= link_to 'Edit', edit_pokemon_path(pokemon) %></td>
         <td><%= link_to 'Destroy', pokemon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -33,5 +34,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Pokemon', new_pokemon_path %>
