@@ -9,8 +9,9 @@ require_relative '../lib/services/api_services'
 include ApiServices
 
 api_service = ApiServices::ConsumeApi.new
-if !(api_service.get_initial_information.dig('errors','has_error'))
-  api_service.get_initial_information.dig('response').each do |pokemon_api|
+response = api_service.get_initial_information
+if !(response.dig('errors','has_error'))
+  response.dig('response').each do |pokemon_api|
       pokemon_new = Pokemon.create( {name: pokemon_api['name'], order: pokemon_api["order"], 
           base_expirence: pokemon_api["base_experience"], heigth: pokemon_api["height"], 
           weight: pokemon_api["height"], img_url: "#{pokemon_api['img_url']}", is_default:["is_default"]})
@@ -32,5 +33,5 @@ if !(api_service.get_initial_information.dig('errors','has_error'))
       end
   end
 else 
-  p api_service.get_initial_information.dig("errors")
+  response.dig("errors")
 end

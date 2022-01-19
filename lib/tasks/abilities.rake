@@ -4,7 +4,7 @@ include ApiServices
 namespace :abilities do
   task insert_abilities: :environment do
     api = ApiServices::ConsumeApi.new  
-    response = api.get_all_pokemons 
+    response = api.get_all_abilities 
     raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error')
     response["response"].each do |ability|
       #valirar si la abilidad ya existe en la base de datos 

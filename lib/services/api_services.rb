@@ -11,7 +11,7 @@ module ApiServices
     def get_json_response url:nil 
       json_response = {"errors" => {"has_error"=> false, "message"=> '', "class"=>''}, "response" => nil}
      begin 
-        puts "Consulting... #{@baseUrl}#{url}"
+        #puts "Consulting... #{@baseUrl}#{url}"
         json_response["response"] = JSON.parse(RestClient.get "#{@baseUrl}#{url}")   
         json_response
      rescue SocketError => e
@@ -26,6 +26,7 @@ module ApiServices
     def get_initial_information     
       begin
       response = (get_json_response url: "pokemon?limit=3") 
+      raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error') 
       unless (response.dig('errors','has_error'))
         pokemons = response.dig("response", "results")
         pokemons.map do |pok| 
@@ -34,16 +35,14 @@ module ApiServices
           pok["base_experience"] = pok_info["base_experience"]
           pok["height"] = pok_info["height"]
           pok["weight"] = pok_info["weight"]
-          pok["img_url"] = pok_info["sprites"]["front_default"]
+          pok["img_url"] = pok_info["sprites"]["other"]["official-artwork"]["front_default"]
           pok["is_default"] = pok_info["is_default"]
           pok["pokemon_abilities"] = pok_info["abilities"].each{ |ability| ability["ability"]["is_main_series"] = (get_ability_by_name name: ability.dig("ability", "name")).dig("response","is_main_series")}
           pok["pokemon_types"] = pok_info["types"]
         end
         response["response"] = pokemons
         response
-      end
-      raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error') 
-      
+      end   
       rescue NoMethodError => e
         response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>e.class})
         response
@@ -85,7 +84,7 @@ module ApiServices
       begin
         response = (get_json_response url: "ability?limit=327")
         raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error')
-        response["response"] = response.dig('response', 'results')
+        response["response"] = response.dig('response', 'results')      
         response
       rescue StandardError => e
         response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>  e.class})

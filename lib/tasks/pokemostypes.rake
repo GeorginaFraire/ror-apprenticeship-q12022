@@ -4,7 +4,7 @@ include ApiServices
 namespace :pokemon_types do 
     task insert_pokemon_types: :environment do
        api =  ApiServices::ConsumeApi.new 
-       p api.get_all_types
+       #p api.get_all_types
        api.get_all_types["response"].each do |pokemon_type|
         
         #validar si el pokemon ya existe en la base da datos
