@@ -1,7 +1,7 @@
 class Pokemon < ApplicationRecord
 
-  validates :name, :presence => true,  :length => {:maximum => 255}
-  validates :order, :presence => true, :numericality => true
+  validates :name, :presence => true,  :length => {:maximum => 255}, :uniqueness => {:case_sensitive => false}
+  validates :order, :presence => true, :numericality => true , :uniqueness => true
   validates :base_expirence, :presence => true, :numericality => true
   validates :heigth, :presence => true, :numericality => true
   validates :weight, :presence => true, :numericality => true
