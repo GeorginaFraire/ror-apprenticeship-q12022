@@ -16,7 +16,7 @@ namespace :pokemon do
           response =  api.get_pokemon_by_name name:pokemon["name"]
           api_pokemon = response["response"]   
           #puts api_pokemon
-          puts Pokemon.create!({name: api_pokemon["name"], order: api_pokemon["order"], base_expirence: api_pokemon["base_experience"], heigth: api_pokemon["height"], weight: api_pokemon["weight"], img_url: api_pokemon["sprites"]["front_default"], is_default: api_pokemon["is_default"] })
+          puts Pokemon.create!({name: api_pokemon["name"], order: api_pokemon["order"], base_expirence: api_pokemon["base_experience"], heigth: api_pokemon["height"], weight: api_pokemon["weight"], img_url: api_pokemon["sprites"]["other"]["official-artwork"]["front_default"], is_default: api_pokemon["is_default"] })
           #p "name = #{api_pokemon["name"]} order = #{api_pokemon["order"]} base_expirence = #{api_pokemon["base_experience"]} heigth = #{api_pokemon["height"]} weight = #{api_pokemon["weight"]} url_img = #{api_pokemon["sprites"]["front_default"]}" 
         end 
       end

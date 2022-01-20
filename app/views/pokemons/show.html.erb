@@ -30,5 +30,11 @@
   <%= @pokemon.img_url %>
 </p>
 
+<p>
+  <% @pokemon.abilities.each do |ability| %>
+    <%= ability.name %>
+  <% end %>
+</p>
+
 <%= link_to 'Edit', edit_pokemon_path(@pokemon) %> |
 <%= link_to 'Back', pokemons_path %>
