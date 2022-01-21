@@ -1,49 +1,122 @@
-<%= form_with(model: pokemon) do |form| %>
-  <% if pokemon.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(pokemon.errors.count, "error") %> prohibited this pokemon from being saved:</h2>
+<div class="container">
+ <div class="row">
+  <div class="col">
+    <%= form_with(model: pokemon, multipart: true) do |form| %>
+    <% if pokemon.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(pokemon.errors.count, "error") %> prohibited this pokemon from being saved:</h2>
 
-      <ul>
-        <% pokemon.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% pokemon.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="table">
+     <tr>
+      <td colspa=2>
+        <div class="mb-3">
+          <%= form.label :name, class:"form-label"%>
+          <%= form.text_field :name , class:"form-control"%>
+        </div>
+      <td>
+     </tr>
+     <tr>
+      <td>
+        <div class="mb-3">
+         <%= form.label :order, class:"form-label"%>
+         <%= form.number_field :order , class:"form-control"%>
+        </div>
+      </td>
+      <td>
+        <div class="field">
+         <%= form.label :base_expirence , class:"form-label"%>
+          <%= form.number_field :base_expirence , class:"form-control"%>
+        </div>
+      </td>
+     </tr>
+     <tr>
+      <td>
+        <div class="mb-3">
+          <%= form.label :heigt, class:"form-label"%>
+          <%= form.number_field :heigth , class:"form-control"%>
+        </div>
+      </td>
+      <td>
+        <div class="mb-3">
+          <%= form.label :weight, class:"form-label"%>
+          <%= form.number_field :weight , class:"form-control"%>
+        </div>
+      </td>
+     </tr>
+    <tr>
+      <td>
+        <div class="mb-3">
+        <%= form.label :abilities %>
+          <ul>
+          <% @pokemon.abilities.each do |ability| %>  
+            <li> 
+                <%= ability.name %> 
+                <%= link_to 'x', deleteAbility_pokemon_path(:pokemon_id=>@pokemon.id, :ability_id=> ability.id), method: :delete %>
+            </li>
+          <% end%>
+          <ul>
+        </div>
+      </td>
+      <td>
+        <div class="mb-3">
+          <%= form.label :types %>
+          <ul>
+          <% @pokemon.types.each do |type| %>  
+            <li> <%= type.name %> 
+              <%= link_to 'x', deleteType_pokemon_path(:pokemon_id=>@pokemon.id, :type_id=> type.id), method: :delete %>
+            </li>
+          <% end%>
+          <ul>
+        </div>     
+      </td>
+     </tr>
+    </table>
+
+    <div class="mb-3">
+      <%= form.label :img_url, class:"form-label"%>
+      <%= form.text_field :img_url , class:"form-control", readonly: true %>
+     <!-- <%= form.file_field :image, class: 'form-control' %> -->
+    </div>
+
+    <!-- <div class="mb-3">
+      <%= form.collection_select(:ability_id, Ability.all , :id,:name, {:prompt => "Please Select a Sector"}, {class: "selectpicker form-control"} )%><br>
+      <%= form.submit 'Add Ability' , class: "btn btn-success" %>
+    </div> -->
+
+
+    <div class="mb-3">
+      <%= form.submit  %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+  <%= form_with(url: addAbility_pokemon_path , method: :put, ) do |form| %>
+     <div class="mb-3">
+      <%=  form.hidden_field :pokemon_id, value: @pokemon.id%>
+      <%= form.collection_select(:ability_id, Ability.all.name_sort, :id,:name, {:prompt => "Please Select an Ability"}, {class: "selectpicker form-control"} )%><br>
+      <%= form.submit 'Add Ability' , class: "btn btn-success" %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :order %>
-    <%= form.number_field :order %>
-  </div>
 
-  <div class="field">
-    <%= form.label :base_expirence %>
-    <%= form.number_field :base_expirence %>
-  </div>
+  <%= form_with(url: addType_pokemon_path , method: :put, ) do |form| %>
+     <div class="mb-3">
+      <%=  form.hidden_field :pokemon_id, value: @pokemon.id%>
+      <%= form.collection_select(:type_id, Type.all.name_sort, :id,:name, {:prompt => "Please Select a Type"}, {class: "selectpicker form-control"} )%><br>
+      <%= form.submit 'Add Type' , class: "btn btn-success" %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= form.label :heigth %>
-    <%= form.number_field :heigth %>
-  </div>
 
-  <div class="field">
-    <%= form.label :weight %>
-    <%= form.number_field :weight %>
   </div>
-
-  <div class="field">
-    <%= form.label :img_url %>
-    <%= form.text_field :img_url %>
+  <div class="col">
+  <%= image_tag("#{@pokemon.img_url}") %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<%= image_tag("#{@pokemon.img_url}") %>
+ </div>
+</div>

@@ -47,6 +47,39 @@ class PokemonsController < ApplicationController
     end
   end
 
+  def addAbility
+    begin 
+      ability = Ability.find(relacion_params[:ability_id])
+      pokemon = Pokemon.find(relacion_params[:pokemon_id])
+      pokemon.abilities << ability
+      flash[:notice] = 'Ability was successfully added'
+      redirect_to edit_pokemon_path
+    rescue ActiveRecord::RecordInvalid  => error
+      flash[:notice] = error.message
+      redirect_to edit_pokemon_path
+    rescue ActiveRecord::RecordNotFound => error
+      flash[:notice] = error.message
+      redirect_to edit_pokemon_path
+    end
+  end
+
+  def addType
+    begin 
+      type = Type.find(relacion_params[:type_id])
+      pokemon = Pokemon.find(relacion_params[:pokemon_id])
+      pokemon.types << type
+      flash[:notice] = 'Type was successfully added'
+      redirect_to edit_pokemon_path
+    rescue ActiveRecord::RecordInvalid  => error
+      flash[:notice] = error.message
+      redirect_to edit_pokemon_path
+    rescue ActiveRecord::RecordNotFound => error
+      flash[:notice] = error.message
+      redirect_to edit_pokemon_path
+    end
+  end
+
+
   # DELETE /pokemons/1 or /pokemons/1.json
   def destroy
     @pokemon.destroy
@@ -55,6 +88,22 @@ class PokemonsController < ApplicationController
       format.html { redirect_to pokemons_url, notice: "Pokemon was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def deleteAbility
+    ability = Ability.find(relacion_params[:ability_id])
+    pokemon = Pokemon.find(relacion_params[:pokemon_id])
+    pokemon.abilities.delete(ability)
+    flash[:notice] = "Ability '#{ability.name}' was deleted"
+    redirect_to edit_pokemon_path
+  end
+
+  def deleteType
+    type = Type.find(relacion_params[:type_id])
+    pokemon = Pokemon.find(relacion_params[:pokemon_id])
+    pokemon.types.delete(type)
+    flash[:notice] = "Type #{type.name} was deleted"
+    redirect_to edit_pokemon_path
   end
 
   private
@@ -67,4 +116,9 @@ class PokemonsController < ApplicationController
     def pokemon_params
       params.require(:pokemon).permit(:name, :order, :base_expirence, :heigth, :weight, :img_url)
     end
+
+   def relacion_params
+      params.permit(:ability_id, :pokemon_id, :type_id)
+    end
+
 end
