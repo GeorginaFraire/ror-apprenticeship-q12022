@@ -14,3 +14,16 @@
  
  *=require_self
  */
+
+  body{
+    background: rgb(0,117,190);
+    background: -moz-linear-gradient(0deg, rgba(0,117,190,1) 0%, rgba(213,161,0,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(0,117,190,1) 0%, rgba(213,161,0,1) 100%);
+    background: linear-gradient(0deg, rgba(0,117,190,1) 0%, rgba(213,161,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0075be",endColorstr="#d5a100",GradientType=1);
+   
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

@@ -1,19 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Pokemons</h1>
 <%= link_to 'New Pokemon', new_pokemon_path %>
 
+ <div class="container">
  <div class="row">
     <% @pokemons.each do |pokemon| %>    
       <div class="col-sm-3">
-      <div class="card">
-        <%= link_to image_tag("#{pokemon.img_url}", :size=>'150x150'), pokemon%>
-       <div class="container">
-       <%= link_to 'Delete', pokemon, method: :delete, data: { confirm: "Are you sure than you want to delete #{pokemon.name} ?" } %>   
-         <h2><%= pokemon.name %></h2>
+      <div class="card" style="width: 20rem;">
+        <%= link_to image_tag("#{pokemon.img_url}", :class=>"card-img-top"), pokemon%>
+       <div class="card-body">
+       <%= link_to 'Delete', pokemon, method: :delete, data: { confirm: "Are you sure than you want to delete #{pokemon.name} ?" } , class:"card-link" %>   
+         <h5 class="card-title"><%= pokemon.name %></h5>
        </div>
       </div>
       </div>
     <% end %>
   </div>
+ </div>
 <br>
