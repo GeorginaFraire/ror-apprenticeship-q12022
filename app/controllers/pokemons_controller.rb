@@ -47,7 +47,7 @@ class PokemonsController < ApplicationController
     end
   end
 
-  def addAbility
+  def add_ability
     begin 
       ability = Ability.find(relacion_params[:ability_id])
       pokemon = Pokemon.find(relacion_params[:pokemon_id])
@@ -63,7 +63,7 @@ class PokemonsController < ApplicationController
     end
   end
 
-  def addType
+  def add_type
     begin 
       type = Type.find(relacion_params[:type_id])
       pokemon = Pokemon.find(relacion_params[:pokemon_id])
@@ -90,7 +90,7 @@ class PokemonsController < ApplicationController
     end
   end
 
-  def deleteAbility
+  def delete_ability
     ability = Ability.find(relacion_params[:ability_id])
     pokemon = Pokemon.find(relacion_params[:pokemon_id])
     pokemon.abilities.delete(ability)
@@ -98,7 +98,7 @@ class PokemonsController < ApplicationController
     redirect_to edit_pokemon_path
   end
 
-  def deleteType
+  def delete_type
     type = Type.find(relacion_params[:type_id])
     pokemon = Pokemon.find(relacion_params[:pokemon_id])
     pokemon.types.delete(type)
