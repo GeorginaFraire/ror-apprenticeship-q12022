@@ -1,12 +1,14 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
     <%= link_to image_tag("pokemon_ball", :size=>'30x30', :alt=>'Pokemon App'), pokemons_path %> 
+    <div class="float-end">
     <% if user_signed_in? %>
-      <%= link_to "Log out", destroy_user_session_path, :method=>'delete', :class => "button is-danger" %>
-      <%= link_to "Edit profile", edit_user_registration_path, :class => "button is-light"%>
+      <%= link_to "Log out", destroy_user_session_path, :method=>'delete', :class => "btn btn-outline-dark" %>
+      <%= link_to "Edit profile", edit_user_registration_path, :class => "btn btn-light"%>
     <% else %>
-      <%= link_to "Log In", sign_in_path, :class => "btn btn-success"%>
+      <%= link_to "Log In", sign_in_path, :class => "btn btn-outline-warning"%>
       <%= link_to "Sign up", sign_up_path, :class => "btn btn-light" %>
        <% end %>
+      </div>
   </div>
 </nav>
