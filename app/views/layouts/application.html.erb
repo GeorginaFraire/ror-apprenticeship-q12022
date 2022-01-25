@@ -12,12 +12,29 @@
 
   <body>
     <%= render 'layouts/headervar'%>
-    <% if notice.nil? %>
-      <p class="notice"><%= notice %></p>
-    <% end%>
-   <% if alert.nil? %>
-      <p class="alert"><%= alert %></p>
-    <% end%>
     <%= yield%>
+
+      <% unless flash.empty? %>
+        <script type="text/javascript">
+          <% flash.each do |f| %>
+          <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'success') %>
+          toastr['<%= type %>']('<%= f[1] %>', '', {
+          "closeButton": true,
+          "positionClass": "toast-top-center", 
+          "onclick": null, 
+          "showDuration": "300", 
+          "hideDuration": "1000", 
+          "timeOut": "5000", 
+          "preventDuplicates": true,
+          "extendedTimeOut": "1000", 
+          "showEasing": "swing", 
+          "hideEasing": "linear", 
+          "showMethod": "slideDown", 
+          "progressBar": false,
+          "hideMethod": "slideUp" });
+          <% end %>
+        </script>
+      <% end %>
+
   </body>
 </html>

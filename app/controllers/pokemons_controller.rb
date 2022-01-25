@@ -85,7 +85,7 @@ class PokemonsController < ApplicationController
     @pokemon.destroy
 
     respond_to do |format|
-      format.html { redirect_to pokemons_url, notice: "Pokemon was successfully destroyed." }
+      format.html { redirect_to pokemons_url, alert: "Pokemon was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -94,7 +94,7 @@ class PokemonsController < ApplicationController
     ability = Ability.find(relacion_params[:ability_id])
     pokemon = Pokemon.find(relacion_params[:pokemon_id])
     pokemon.abilities.delete(ability)
-    flash[:notice] = "Ability '#{ability.name}' was deleted"
+    flash[:alert] = "Ability '#{ability.name}' was deleted"
     redirect_to edit_pokemon_path
   end
 
@@ -102,7 +102,7 @@ class PokemonsController < ApplicationController
     type = Type.find(relacion_params[:type_id])
     pokemon = Pokemon.find(relacion_params[:pokemon_id])
     pokemon.types.delete(type)
-    flash[:notice] = "Type #{type.name} was deleted"
+    flash[:alert] = "Type #{type.name} was deleted"
     redirect_to edit_pokemon_path
   end
 
