@@ -82,5 +82,3 @@ test:
 production:
   <<: *default
   database: ror_apprenticeship_q12022_production
-  username: ror_apprenticeship_q12022
-  password: <%= ENV['ROR_APPRENTICESHIP_Q12022_DATABASE_PASSWORD'] %>
