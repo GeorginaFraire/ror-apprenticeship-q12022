@@ -11,6 +11,7 @@ module ApiServices
     def get_json_response url:nil 
       json_response = {}
      begin 
+        puts "#{@baseUrl}#{url}"
         json_response["response"] = JSON.parse(RestClient.get "#{@baseUrl}#{url}")   
         json_response
      rescue SocketError => e
@@ -39,8 +40,8 @@ module ApiServices
         response
     end
 
-    def get_all_pokemons
-      response = (get_json_response url: "pokemon?limit=50&offset=3")
+    def get_all_pokemons limit: 10
+      response = (get_json_response url: "pokemon?limit=#{limit}&offset=3")
       response["response"] = response.dig('response', 'results')
       response
     end 

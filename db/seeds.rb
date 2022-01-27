@@ -31,3 +31,6 @@ response.dig('response').each do |pokemon_api|
       pokemon_types = PokemonType.create(pokemon: pokemon_new, type: type_new)
     end
 end
+puts "Pokemons : #{Pokemon.count}"
+puts "Abilities : #{Ability.count}" 
+puts "Abilities : #{Type.count}" 

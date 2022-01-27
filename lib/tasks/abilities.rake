@@ -15,5 +15,6 @@ namespace :abilities do
         Ability.create({ name: api_ability["name"], is_main_series:api_ability["is_main_series"]})
       end
     end
+    puts "Abilities: #{response["response"].size}"
   end 
 end
