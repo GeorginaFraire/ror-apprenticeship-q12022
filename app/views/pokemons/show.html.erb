@@ -1,40 +1,79 @@
-<p id="notice"><%= notice %></p>
+  
+<div class="container">
+<div class="card mb-3" style="max-width: 100%;">
+  <div class="row g-0">
+    <div class="col-md-4">
+        <%= image_tag("#{@pokemon.img_url}") %>
+    </div>
+    <div class="col-md-8">
+    <div class="card-header">
+      <%= link_to edit_pokemon_path(@pokemon), class:"link_close" do%> 
+        <i class="fas fa-edit"></i>
+      <%end%>
+      <h5 class="card-title"><%= @pokemon.name.camelize %></h5>
+    </div>
+      <div class="card-body">
+         <table class="table">
+        <tr>
+          <td> 
+            <strong>Order:</strong>
+          </td>
+          <td>
+              <%= @pokemon.order %>
+          </td>
+          <td> 
+            <strong>Base expirence:</strong>
+          </td>
+          <td>
+             <%= @pokemon.base_expirence %>
+          </td>
+        </tr>
 
-<p>
-  <strong>Name:</strong>
-  <%= @pokemon.name %>
-</p>
+        <tr>
+          <td> 
+            <strong>Heigth:</strong>
+          </td>
+          <td>
+              <%= @pokemon.heigth %>
+          </td>
+          <td> 
+            <strong>Weight:</strong>
+          </td>
+          <td>
+             <%= @pokemon.weight %>
+          </td>
+        </tr>
 
-<p>
-  <strong>Order:</strong>
-  <%= @pokemon.order %>
-</p>
+        <tr>
+          <td> 
+            <strong>Abilities:</strong>
+          </td>
+          <td>
+            <ul>
+              <% @pokemon.abilities.each do |ability| %>  
+                <li> 
+                  <%= ability.name %>   
+                </li>
+              <% end%>
+            <ul>
+          </td>
+          <td> 
+            <strong>Types:</strong>
+          </td>
+          <td>
+            <% @pokemon.types.each do |pok_type|%>
+               <%= link_to  "#", class: "btn bg_#{pok_type.name}" do %>
+               <!--type_pokemons_path(pok_type.id)  -->
+                 <%= pok_type.name %>
+               <%end%>
+            <%end%>
+          </td>
+        </tr>
 
-<p>
-  <strong>Base expirence:</strong>
-  <%= @pokemon.base_expirence %>
-</p>
-
-<p>
-  <strong>Heigth:</strong>
-  <%= @pokemon.heigth %>
-</p>
-
-<p>
-  <strong>Weight:</strong>
-  <%= @pokemon.weight %>
-</p>
-
-<p>
-  <strong>Img url:</strong>
-  <%= @pokemon.img_url %>
-</p>
-
-<p>
-  <% @pokemon.abilities.each do |ability| %>
-    <%= ability.name %>
-  <% end %>
-</p>
-
-<%= link_to 'Edit', edit_pokemon_path(@pokemon) %> |
-<%= link_to 'Back', pokemons_path %>
+      </table>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

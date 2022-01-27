@@ -1,6 +1,8 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
-    <%= link_to image_tag("pokemon_ball.png", :size=>'30x30', :alt=>'Pokemon App'), pokemons_path %> 
+    <%= link_to  pokemons_path, :class=> "navbar-brand" do %>
+     <%= image_tag("pokemon_ball.png", :size=>'30x30', :alt=>'Pokemon App') %> Pokemon_app
+    <%end%>
     <div class="float-end">
     <% if user_signed_in? %>
       <%= link_to "Log out", destroy_user_session_path, :method=>'delete', :class => "btn btn-outline-dark" %>
