@@ -1,7 +1,7 @@
 require 'rest-client'
 
 module ApiServices
-  class ConsumeApi
+  class Poke_api
     attr_accessor :base
     
     def initialize
@@ -9,25 +9,20 @@ module ApiServices
     end
 
     def get_json_response url:nil 
-      json_response = {"errors" => {"has_error"=> false, "message"=> '', "class"=>''}, "response" => nil}
+      json_response = {}
      begin 
-        #puts "Consulting... #{@baseUrl}#{url}"
         json_response["response"] = JSON.parse(RestClient.get "#{@baseUrl}#{url}")   
         json_response
      rescue SocketError => e
-       json_response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>e.class})
-       json_response
+      p "Error: Cannot find the url #{@baseUrl}#{url}"
+      raise(e)
      rescue RestClient::NotFound => e
-        json_response["errors"] = {"has_error"=> true, "message"=> e.message, "class"=>e.class} 
-        json_response
+      raise (e)
      end
     end
   
-    def get_initial_information     
-      begin
-      response = (get_json_response url: "pokemon?limit=3") 
-      raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error') 
-      unless (response.dig('errors','has_error'))
+    def get_initial_information      
+      response = (get_json_response url: "pokemon?limit=3")
         pokemons = response.dig("response", "results")
         pokemons.map do |pok| 
         pok_info =  (get_pokemon_by_name name: pok['name']).dig('response')
@@ -42,71 +37,42 @@ module ApiServices
         end
         response["response"] = pokemons
         response
-      end   
-      rescue NoMethodError => e
-        response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>e.class})
-        response
-      rescue StandardError => e
-        response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>e.class})
-        response
-      end 
     end
 
     def get_all_pokemons
-      begin
-        response = (get_json_response url: "pokemon?limit=50&offset=3")
-        raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error')
-        response["response"] = response.dig('response', 'results')
-        response
-      rescue StandardError => e
-        response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>  e.class})
-        response
-      end 
+      response = (get_json_response url: "pokemon?limit=50&offset=3")
+      response["response"] = response.dig('response', 'results')
+      response
     end 
 
     def get_pokemon_by_name name:nil 
-      #pokemon = RestClient.get "#{@baseUrl}pokemon/#{name}"
       begin 
         raise StandardError.new "name cannot be blank" if (name.nil? || name.empty?)
         response = (get_json_response url: "pokemon/#{name}")
-        raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error')
         response["response"] = (get_json_response url: "pokemon/#{name}")["response"]
         response
       rescue StandardError => e
-        response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>  e.class})
-        response
+        raise(e)
       end
     end
 
     def get_all_abilities
-      #abilities = (get_json_response url: "ability?limit=327")["results"]
-      #abilities
-      begin
         response = (get_json_response url: "ability?limit=327")
-        raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error')
         response["response"] = response.dig('response', 'results')      
-        response
-      rescue StandardError => e
-        response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>  e.class})
-        response
-      end 
+        response 
     end
 
     def get_ability_by_name name:nil      
       begin 
         raise StandardError.new "name cannot be blank" if (name.nil? || name.empty?)
         response = (get_json_response url: "ability/#{name}")
-        raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error') 
         response
-      rescue StandardError => e
-        response.store("errors", {"has_error"=> true, "message"=> e.message, "class"=>e.class})
-        response
-      end
+       rescue StandardError => e
+         raise(e)
+       end
     end
 
     def get_all_types
-      #types = (get_json_response url: "type")["results"]
-      #types
       begin
         response = (get_json_response url: "type")
         raise StandardError.new response.dig('errors','message') if response.dig('errors', 'has_error')
@@ -117,11 +83,5 @@ module ApiServices
         response
       end 
     end
-
-    def get_type_by_name name:nil
-      type = get_json_response url: "type/#{name}"
-      type
-    end
-
   end
 end

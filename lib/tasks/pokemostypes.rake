@@ -3,7 +3,7 @@ include ApiServices
 
 namespace :pokemon_types do 
     task insert_pokemon_types: :environment do
-       api =  ApiServices::ConsumeApi.new 
+       api =  ApiServices::Poke_api.new 
        #p api.get_all_types
        api.get_all_types["response"].each do |pokemon_type|
         
