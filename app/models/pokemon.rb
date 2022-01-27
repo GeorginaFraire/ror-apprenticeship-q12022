@@ -7,6 +7,7 @@ class Pokemon < ApplicationRecord
   validates :weight, :presence => true, :numericality => true
 
   scope :name_sort, -> {order(:name)}
+  scope :order_sort, -> {order(:order)}
 
   has_many :ability_pokemons
   has_many :abilities, :through => :ability_pokemons

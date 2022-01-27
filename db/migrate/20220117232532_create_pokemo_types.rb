@@ -8,3 +8,4 @@ class CreatePokemoTypes < ActiveRecord::Migration[6.1]
     add_index('pokemon_types', ['pokemon_id','type_id'])
   end
 end
+
