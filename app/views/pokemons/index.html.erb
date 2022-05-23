@@ -1,0 +1,39 @@
+
+ <div class="container">
+ <div class="row float-end">
+  <%= link_to new_pokemon_path do %>
+    <i class="fas fa-plus-circle fa-2x"></i> New Pokemon 
+  <% end %>
+ </div>
+ <br>
+ </div>
+ <div class="container">
+ <br>
+ <div class="row">
+    <% @pokemons.each do |pokemon| %>    
+      <div class="col-sm-3">
+        <div class="card rounded" style="width: 20rem;">
+          <div class="card-header">
+            <%= link_to pokemon, method: :delete, data: { confirm: "Are you sure than you want to delete #{pokemon.name} ?" } , class:"link_close" do %>  
+              <i class="fas fa-trash-alt"></i>
+            <% end %> 
+          </div>  
+          <div class="card-body">
+            <%= link_to image_tag("#{pokemon.img_url}", :class=>"card-img-top"), pokemon%> 
+            <h5 class="card-title"><%= pokemon.name %></h5>
+          </div>
+          <div class="card-footer">
+            <% pokemon.types.each do |pok_type|%>
+               <%= link_to  "#", class: "btn bg_#{pok_type.name}" do %>
+               <!--type_pokemons_path(pok_type.id)  -->
+                 <%= pok_type.name %>
+               <%end%>
+            <%end%>
+          </div>
+        </div>
+        <br>
+      </div>
+    <% end %>
+  </div>
+ </div>
+<br>
